@@ -1,0 +1,53 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, monospace;
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel2: var(--panel2);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+}
+
+:root {
+  --bg: #ffffff; --panel: #fafafa; --panel2: #f4f4f5; --line: #e4e4e7;
+  --fg: #09090b; --muted: #71717a; --accent: #09090b; --accent-fg: #fafafa;
+}
+.dark {
+  --bg: #09090b; --panel: #0f0f12; --panel2: #18181b; --line: #27272a;
+  --fg: #fafafa; --muted: #a1a1aa; --accent: #fafafa; --accent-fg: #09090b;
+}
+
+html, body, #root { height: 100%; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+* { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+::selection { background: var(--fg); color: var(--bg); }
+
+@keyframes fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.fade-up { animation: fade-up .25s ease both; }
+@keyframes blink { 50% { opacity: 0; } }
+.cursor::after { content: "▍"; margin-left: 2px; animation: blink 1s steps(2) infinite; }
+@keyframes shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+.skeleton { background: linear-gradient(90deg, var(--panel2) 25%, var(--line) 50%, var(--panel2) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+@keyframes bounce-dot { 0%, 80%, 100% { transform: scale(.6); opacity: .4; } 40% { transform: scale(1); opacity: 1; } }
+.dot { width: 6px; height: 6px; border-radius: 9999px; background: var(--muted); animation: bounce-dot 1.2s infinite ease-in-out; }
+
+.prose { --tw-prose-body: var(--fg); --tw-prose-headings: var(--fg); --tw-prose-bold: var(--fg);
+  --tw-prose-links: var(--fg); --tw-prose-code: var(--fg); --tw-prose-bullets: var(--muted);
+  --tw-prose-counters: var(--muted); --tw-prose-th-borders: var(--line); --tw-prose-td-borders: var(--line);
+  --tw-prose-quotes: var(--fg); --tw-prose-quote-borders: var(--line); --tw-prose-hr: var(--line); }
+.prose pre { background: var(--panel2); border: 1px solid var(--line); color: var(--fg); }
+.prose code { background: var(--panel2); padding: .1rem .35rem; border-radius: .35rem; font-weight: 500; }
+.prose pre code { background: transparent; padding: 0; }
+.prose code::before, .prose code::after { content: none; }
+.prose a { text-decoration: underline; text-underline-offset: 3px; }
+.cite { display: inline-flex; align-items: center; justify-content: center; min-width: 1.2rem; height: 1.2rem;
+  padding: 0 .3rem; margin: 0 .1rem; font-size: .68rem; font-weight: 600; border-radius: .4rem;
+  background: var(--panel2); border: 1px solid var(--line); cursor: pointer; vertical-align: .1em; }
+.cite:hover { background: var(--fg); color: var(--bg); }

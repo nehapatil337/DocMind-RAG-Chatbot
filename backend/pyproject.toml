@@ -1,0 +1,29 @@
+[project]
+name = "docmind-backend"
+version = "1.0.0"
+description = "DocMind RAG API — FastAPI + pgvector (Supabase/Postgres)"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "sqlalchemy>=2.0.30",
+  "psycopg[binary]>=3.2",
+  "pgvector>=0.3.2",
+  "pyjwt>=2.9",
+  "bcrypt>=4.2",
+  "httpx>=0.27",
+  "pydantic-settings>=2.4",
+  "pydantic[email]>=2.8",
+  "python-multipart>=0.0.9",
+  "pypdf>=5.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
