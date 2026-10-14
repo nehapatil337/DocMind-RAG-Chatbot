@@ -31,7 +31,9 @@ def embed_texts(texts: list[str], batch_size: int = 32) -> list[list[float]]:
                     )
                     if r.status_code in (429, 500, 502, 503, 504):
                         raise httpx.HTTPStatusError("retryable", request=r.request, response=r)
-                    r.raise_for_status()
+                    if r.is_error:
+                        # Client errors won't succeed on retry; surface the provider's message
+                        raise EmbeddingError(f"Embedding request failed ({r.status_code}): {r.text[:500]}")
                     data = sorted(r.json()["data"], key=lambda d: d["index"])
                     vecs = [d["embedding"] for d in data]
                     if vecs and len(vecs[0]) != s.embedding_dim:
